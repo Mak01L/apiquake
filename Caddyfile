@@ -1,0 +1,21 @@
+# Replace apiquake.dev with your real domain. Caddy will auto-provision a
+# Let's Encrypt cert on first boot. If you use Cloudflare Tunnel you can
+# instead leave this file as "http://:80 -> web:3000" and let cloudflared
+# terminate TLS — see README.
+apiquake.dev, www.apiquake.dev {
+	encode zstd gzip
+	reverse_proxy web:3000
+
+	@health path /api/health
+	handle @health {
+		reverse_proxy web:3000
+	}
+
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		Permissions-Policy "interest-cohort=()"
+		-Server
+	}
+}
