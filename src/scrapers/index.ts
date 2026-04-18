@@ -24,15 +24,16 @@ export const allSources: SourceDefinition[] = [
   },
   {
     slug: "openai",
-    name: "OpenAI",
+    name: "OpenAI API",
     vendor: "OpenAI",
     logoUrl: "https://cdn.simpleicons.org/openai/ffffff",
     homepageUrl: "https://openai.com",
-    docsUrl: "https://platform.openai.com/docs/changelog",
-    kind: "html",
-    fetchUrl: "https://platform.openai.com/docs/changelog",
-    config: { selector: "main" },
-    pollIntervalMinutes: 60,
+    docsUrl: "https://github.com/openai/openai-openapi/releases",
+    // OpenAI's web changelog is Cloudflare-protected. Their OpenAPI spec repo
+    // ships tagged releases when the surface changes — that's a cleaner signal.
+    kind: "github_releases",
+    fetchUrl: "https://api.github.com/repos/openai/openai-openapi/releases?per_page=30",
+    pollIntervalMinutes: 120,
   },
   {
     slug: "github",
@@ -65,7 +66,7 @@ export const allSources: SourceDefinition[] = [
     homepageUrl: "https://vercel.com",
     docsUrl: "https://vercel.com/changelog",
     kind: "rss",
-    fetchUrl: "https://vercel.com/changelog/feed.xml",
+    fetchUrl: "https://vercel.com/atom",
     pollIntervalMinutes: 60,
   },
 ];

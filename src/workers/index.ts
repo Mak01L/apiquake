@@ -11,7 +11,6 @@
  * A scheduler enqueues a `fetch_all` job on CRON_REFRESH_PATTERN. That job
  * enqueues one `fetch` job per active API source that is due.
  */
-import "dotenv/config";
 import { Worker } from "bullmq";
 import {
   getQueue,

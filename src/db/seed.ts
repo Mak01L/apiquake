@@ -1,4 +1,3 @@
-import "dotenv/config";
 import { db } from "./index";
 import { apiSources } from "./schema";
 import { allSources } from "../scrapers";
