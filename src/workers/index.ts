@@ -72,7 +72,7 @@ async function main() {
     "fetch_all",
     {},
     {
-      jobId: "cron:fetch_all",
+      jobId: "cron-fetch_all",
       repeat: { pattern: env.CRON_REFRESH_PATTERN },
       removeOnComplete: 100,
       removeOnFail: 100,
