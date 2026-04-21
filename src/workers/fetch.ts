@@ -20,7 +20,7 @@ export async function handleFetchAll(): Promise<{ queued: number }> {
       "fetch_one",
       { sourceId: s.id },
       {
-        jobId: `fetch:${s.id}:${now.getTime()}`,
+        jobId: `fetch-${s.id}-${now.getTime()}`,
         attempts: 3,
         backoff: { type: "exponential", delay: 10_000 },
         removeOnComplete: 100,
@@ -82,7 +82,7 @@ export async function handleFetch(sourceId: string): Promise<{
       "diff_one",
       { sourceId: source.id, nextSnapshotId: snapshotId },
       {
-        jobId: `diff:${snapshotId}`,
+        jobId: `diff-${snapshotId}`,
         attempts: 2,
         removeOnComplete: 100,
         removeOnFail: 50,

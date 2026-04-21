@@ -40,3 +40,5 @@ yarn-error.log*
 next-env.d.ts
 
 # drizzle (keep migrations, ignore meta lock churn? keep everything)
+docker-compose.override.yml
+scripts/
