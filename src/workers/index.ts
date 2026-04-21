@@ -68,6 +68,22 @@ async function main() {
 
   // Schedule the global refresh on the configured cron pattern.
   // BullMQ dedupes by jobId, so calling this on startup is safe.
+  //
+  // NOTE: early builds used `jobId: "cron:fetch_all"`, which BullMQ later
+  // started rejecting ("Custom Id cannot contain :"). On any deploy that ran
+  // before that, Redis may still have a repeatable keyed on the old id, which
+  // would cause the fetch_all cron to fire twice. Remove the legacy entry
+  // unconditionally on boot — it's a no-op if it doesn't exist.
+  await fetchQueue
+    .removeRepeatable(
+      "fetch_all",
+      { pattern: env.CRON_REFRESH_PATTERN },
+      "cron:fetch_all",
+    )
+    .catch((err) => {
+      console.warn("[worker] could not remove legacy repeatable:", err);
+    });
+
   await fetchQueue.add(
     "fetch_all",
     {},
